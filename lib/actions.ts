@@ -2,7 +2,7 @@
 import prisma from "@/prisma/prisma";
 import { hash } from "bcrypt-ts";
 import { signUpSchema } from "@/lib/zod";
-import { signIn } from "@/auth";
+import { signIn, signOut } from "@/auth";
 import { AuthError, CredentialsSignin } from "next-auth";
 import { redirect } from "next/navigation";
 

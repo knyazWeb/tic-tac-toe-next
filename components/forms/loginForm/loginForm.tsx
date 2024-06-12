@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import CustomInput from "@/components/ui/customInput/customInput";
 import CustomButton from "@/components/ui/customButton/customButton";
 import { submitLoginForm } from "@/lib/actions";
+import { useState } from "react";
 
 interface Fields {
   login: string;
@@ -13,6 +14,7 @@ interface Fields {
 
 export default function LoginForm() {
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     register,
     handleSubmit,
@@ -24,6 +26,8 @@ export default function LoginForm() {
   });
 
   const onSubmit: SubmitHandler<Fields> = async (data) => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     const formData = new FormData();
     for (const key in data) {
       formData.append(key, data[key]);
@@ -39,6 +43,7 @@ export default function LoginForm() {
       setError("password", { message: "Неправильный пароль или логин" });
       toast.remove(toastId);
     }
+    setIsSubmitting(false);
   };
 
   return (
@@ -78,7 +83,7 @@ export default function LoginForm() {
       <CustomButton
         type="submit"
         size="medium"
-        active={isValid}
+        active={isValid && !isSubmitting}
       >
         Войти
       </CustomButton>

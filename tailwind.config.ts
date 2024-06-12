@@ -21,6 +21,9 @@ const config: Config = {
         bgGray: "#F6F6F6",
         placeholder: "#B1B1B7",
       },
+      boxShadow: {
+        main: "0px 2px 6px 0px rgba(44, 57, 121, 0.1)",
+      },
     },
   },
   plugins: [],

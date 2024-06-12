@@ -6,6 +6,7 @@ import CustomButton from "@/components/ui/customButton/customButton";
 import toast from "react-hot-toast";
 import { submitSignupForm } from "@/lib/actions";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface Fields {
   login: string;
@@ -13,6 +14,8 @@ interface Fields {
 }
 
 export default function SignupForm() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const router = useRouter();
   const {
     register,
@@ -23,6 +26,8 @@ export default function SignupForm() {
   });
 
   const onSubmit: SubmitHandler<Fields> = async (data) => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     const formData = new FormData();
     for (const key in data) {
       formData.append(key, data[key]);
@@ -37,6 +42,7 @@ export default function SignupForm() {
     } else {
       toast.error(String(error), { id: toastId });
     }
+    setIsSubmitting(false);
   };
 
   return (
@@ -86,7 +92,7 @@ export default function SignupForm() {
       <CustomButton
         type="submit"
         size="medium"
-        active={isValid}
+        active={isValid && !isSubmitting}
       >
         Зарегистрироваться
       </CustomButton>

@@ -23,7 +23,7 @@ export default function Signup() {
           className="text-accent font-bold hover:text-accentDark transition-colors duration-200 ease-in-out"
           href="/login"
         >
-          Войдите
+          Войти
         </Link>
       </p>
     </div>
