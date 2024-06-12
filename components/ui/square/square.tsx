@@ -5,7 +5,7 @@ import Cross from "/public/cross.svg";
 import Zero from "/public/zero.svg";
 
 interface SquareProps {
-  state?: "cross" | "zero";
+  state?: string;
   onClick?: () => void;
 }
 
@@ -33,7 +33,7 @@ export default function Square({ state, onClick }: SquareProps) {
       ref={squareRef}
       style={{ height }}
       onClick={onClick}
-      className={`max-w-[197px] bg-white w-full rounded-xl hover:bg-[#f7f7f7] transition-all duration-200 ease-in-out ${state === "cross" ? "cursor-default" : state === "zero" ? "cursor-default" : "cursor-pointer"} flex justify-center items-center`}
+      className={`max-w-[197px] bg-white w-full rounded-xl hover:bg-[#f7f7f7] transition-all duration-200 ease-in-out ${state === "X" ? "cursor-default" : state === "O" ? "cursor-default" : "cursor-pointer"} flex justify-center items-center`}
     >
       {state === "cross" ? (
         <div>
