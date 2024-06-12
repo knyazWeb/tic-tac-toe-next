@@ -23,6 +23,7 @@ const config: Config = {
       },
       boxShadow: {
         main: "0px 2px 6px 0px rgba(44, 57, 121, 0.1)",
+        container: "0px 4px 20px 0px rgba(44, 57, 121, 0.09)",
       },
     },
   },
