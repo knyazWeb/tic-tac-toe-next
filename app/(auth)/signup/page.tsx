@@ -1,6 +1,7 @@
 import Image from "next/image";
 import dogPng from "/public/dog.png";
 import SignupForm from "@/components/forms/signupForm/signupForm";
+import Link from "next/link";
 
 export default function Signup() {
   return (
@@ -16,6 +17,15 @@ export default function Signup() {
       />
       <p className="font-bold text-2xl text-cente mb-5">Зарегистрируйте аккаунт</p>
       <SignupForm />
+      <p className="mt-3 text-sm">
+        Уже есть аккаунт ?{" "}
+        <Link
+          className="text-accent font-bold hover:text-accentDark transition-colors duration-200 ease-in-out"
+          href="/login"
+        >
+          Войдите
+        </Link>
+      </p>
     </div>
   );
 }

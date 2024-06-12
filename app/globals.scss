@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 body {
-  @apply bg-bgGray text-base font-normal not-italic antialiased;
+  @apply bg-bgGray text-base font-normal not-italic antialiased text-textDark;
 }
 
 input {
-  @apply outline-accentDark
+  @apply outline-accentDark;
 }

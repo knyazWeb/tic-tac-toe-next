@@ -19,7 +19,7 @@ const config: Config = {
         lightRed: "#EC7777",
         lightBlue: "#87CAE8",
         bgGray: "#F6F6F6",
-        placeholder: "#DCDCDF",
+        placeholder: "#B1B1B7",
       },
     },
   },

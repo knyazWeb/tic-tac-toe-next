@@ -6,7 +6,7 @@ const CustomInput = forwardRef<HTMLInputElement, React.HTMLProps<HTMLInputElemen
   return (
     <input
       ref={ref}
-      className="w-full py-3 px-5 border-[#DCDCDF] border rounded-[12px] text-placeholder "
+      className="w-full py-3 px-5 border-[#DCDCDF] border rounded-[12px] placeholder:text-placeholder"
       {...props}
     />
   );

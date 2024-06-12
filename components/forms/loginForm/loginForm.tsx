@@ -1,22 +1,23 @@
 "use client";
-
+import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import CustomInput from "@/components/ui/customInput/customInput";
 import CustomButton from "@/components/ui/customButton/customButton";
-import toast from "react-hot-toast";
-import { submitSignupForm } from "@/lib/actions";
-import { useRouter } from "next/navigation";
+import { submitLoginForm } from "@/lib/actions";
 
 interface Fields {
   login: string;
   password: string;
 }
 
-export default function SignupForm() {
+export default function LoginForm() {
   const router = useRouter();
   const {
     register,
     handleSubmit,
+    clearErrors,
+    setError,
     formState: { errors, isValid },
   } = useForm<Fields>({
     mode: "onChange",
@@ -27,15 +28,16 @@ export default function SignupForm() {
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    const toastId = toast.loading("Регистрация...");
+    const toastId = toast.loading("Вход...");
 
-    const error = await submitSignupForm(formData);
+    const error = await submitLoginForm(formData);
 
     if (!error) {
-      toast.success("Успешная регистрация", { id: toastId });
-      router.replace("/login");
+      toast.success("Успешный вход", { id: toastId });
+      router.replace("/");
     } else {
-      toast.error(String(error), { id: toastId });
+      setError("password", { message: "Неправильный пароль или логин" });
+      toast.remove(toastId);
     }
   };
 
@@ -52,11 +54,10 @@ export default function SignupForm() {
           name="login"
           placeholder="Логин"
           {...register("login", {
-            required: "Логин обязателен",
-            minLength: {
-              value: 2,
-              message: "Минимальная длина логина 2 символа",
+            onChange: () => {
+              clearErrors("password");
             },
+            required: "Логин обязателен",
           })}
         />
         {errors.login && <p className="text-error text-xs mt-1">{errors.login.message}</p>}
@@ -70,25 +71,16 @@ export default function SignupForm() {
           placeholder="Пароль"
           {...register("password", {
             required: "Пароль обязателен",
-            minLength: {
-              value: 8,
-              message: "Минимальная длина пароля 8 символов",
-            },
-            maxLength: {
-              value: 32,
-              message: "Максимальная длина пароля 32 символа",
-            },
           })}
         />
         {errors.password && <p className="text-error text-xs mt-1">{errors.password.message}</p>}
       </div>
-
       <CustomButton
         type="submit"
         size="medium"
         active={isValid}
       >
-        Зарегистрироваться
+        Войти
       </CustomButton>
     </form>
   );
