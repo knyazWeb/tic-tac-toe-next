@@ -47,15 +47,18 @@ export default function GameField() {
         </div>
         <div className="grid gap-1 grid-cols-[minmax(120px,197px)_minmax(120px,197px)_minmax(120px,197px)] grid-rows-[minmax(120px, 197px)_minmax(120px,197px)_minmax(120px,197px)] justify-center shadow-main w-fit rounded-xl">
           {squareStates.map((state, index) => {
+            const winInfo = calculateWinner(squareStates);
+            const isWinningSquare = winInfo ? winInfo.line.includes(index) : false;
             return (
               <Square
                 key={index}
                 state={state}
+                isWinning={isWinningSquare}
                 onClick={() => {
                   if (state || isGameStopped) return;
                   const newSquareStates = [...squareStates];
                   newSquareStates[index] = isCrossNext ? "cross" : "zero";
-                  const winner = calculateWinner(newSquareStates);
+                  const winner = calculateWinner(newSquareStates)?.winner;
                   if (winner) {
                     setIsGameStopped(true);
                     if (winner === "cross") {
