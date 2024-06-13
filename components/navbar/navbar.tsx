@@ -9,6 +9,7 @@ import { signOut } from "next-auth/react";
 
 export default function Navbar() {
   const pathname = usePathname();
+  console.log(pathname);
   return (
     <nav className="max-w-[1920px] w-full flex justify-between items-center h-[64px] bg-white rounded-b-2xl shadow-main py-4 px-10">
       <div>
@@ -23,7 +24,7 @@ export default function Navbar() {
         {navbarList.map((item, index) => (
           <li key={index}>
             <CustomLink
-              active={pathname === item.path}
+              active={pathname === "/game-field" && item.path === "/" ? true : pathname === item.path ? true : false}
               href={item.path}
             >
               {item.title}

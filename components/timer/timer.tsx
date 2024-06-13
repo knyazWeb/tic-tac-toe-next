@@ -4,19 +4,41 @@ import { useEffect, useState } from "react";
 
 interface TimerProps {
   startSeconds: number;
+  isStopped: boolean;
+  timerState: boolean;
+  stopGame: () => void;
 }
 
-export default function Timer({ startSeconds }: TimerProps) {
+export default function Timer({ startSeconds, isStopped, timerState, stopGame }: TimerProps) {
   const [time, setTime] = useState<number>(startSeconds);
+
+  const resetTimer = () => {
+    setTime(startSeconds);
+  };
+
   useEffect(() => {
     const timerId = setInterval(() => {
-      setTime((prevTime) => prevTime - 1);
+      if (!isStopped) {
+        setTime((prevTime) => {
+          if (prevTime === 0) {
+            stopGame();
+            return prevTime;
+          }
+          return prevTime - 1;
+        });
+      }
     }, 1000);
 
     return () => {
       clearInterval(timerId);
     };
-  }, []);
+  }, [isStopped]);
+
+  useEffect(() => {
+    if (timerState) {
+      resetTimer();
+    }
+  }, [timerState]);
 
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;

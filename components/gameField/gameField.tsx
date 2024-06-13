@@ -2,85 +2,92 @@
 
 import Square from "@/components/ui/square/square";
 import { useEffect, useState } from "react";
-import calculateWinner from "@/helpers/calculateWinner";
-import { io } from "socket.io-client";
 import StepPanel from "@/components/stepPanel/stepPanel";
 import Timer from "@/components/timer/timer";
-
-// const socket = io(`${process.env.SERVER_HOST}:${process.env.SERVER_PORT}`);
-//
-// socket.on("connect", () => {
-//   console.log("Connected to server");
-// });
+import calculateWinner from "@/helpers/calculateWinner";
+import CustomModal from "@/components/customModal/customModal";
 
 export default function GameField() {
+  const [squareStates, setSquareStates] = useState(Array(9).fill(null));
+  const [isGameStopped, setIsGameStopped] = useState(false);
   const [isCrossNext, setIsCrossNext] = useState(true);
-  const [roomId, setRoomId] = useState<string | null>(null);
-  const [board, setBoard] = useState<(string | null)[]>(Array(9).fill(null));
-  const [isXNext, setIsXNext] = useState(true);
-  const [player, setPlayer] = useState<string | null>(null);
-  const [message, setMessage] = useState<string>("");
-  // useEffect(() => {
-  //   socket.on("roomCreated", (roomId: string) => {
-  //     setRoomId(roomId);
-  //     setPlayer("X");
-  //   });
-  //
-  //   socket.on("playerJoined", (roomId: string) => {
-  //     setMessage(`Player joined the room: ${roomId}`);
-  //   });
-  //
-  //   socket.on("moveMade", (board: (string | null)[]) => {
-  //     setBoard(board);
-  //     setIsXNext((prev) => !prev);
-  //   });
-  //
-  //   socket.on("error", (errorMessage: string) => {
-  //     setMessage(errorMessage);
-  //   });
-  //
-  //   return () => {
-  //     socket.off("roomCreated");
-  //     socket.off("playerJoined");
-  //     socket.off("moveMade");
-  //     socket.off("error");
-  //   };
-  // }, []);
-  // const createRoom = () => {
-  //   socket.emit("createRoom");
-  // };
-  //
-  // const joinRoom = (roomId: string) => {
-  //   socket.emit("joinRoom", roomId);
-  //   setPlayer("O");
-  // };
-  //
-  // const makeMove = (index: number) => {
-  //   if (board[index] === null && ((isXNext && player === "X") || (!isXNext && player === "O"))) {
-  //     socket.emit("makeMove", { roomId, index, player });
-  //   }
-  // };
+  const [winState, setWinState] = useState(null);
+  const [timerState, setTimerState] = useState(false);
 
+  const resetGame = () => {
+    setTimerState(true);
+    setSquareStates(Array(9).fill(null));
+    setIsGameStopped(false);
+    setIsCrossNext(true);
+    setWinState(null);
+    setTimeout(() => {
+      setTimerState(false);
+    }, 0);
+  };
+
+  useEffect(() => {
+    if (isGameStopped && winState === null) {
+      setWinState("Ничья");
+    }
+  }, [isGameStopped]);
   return (
-    <div className="flex flex-col items-center">
-      <div className="mb-[37px]">{/*<Timer startSeconds={180} />*/}</div>
-      <div className="grid gap-1 grid-cols-[minmax(120px,197px)_minmax(120px,197px)_minmax(120px,197px)] grid-rows-[minmax(120px, 197px)_minmax(120px,197px)_minmax(120px,197px)] justify-center shadow-main w-fit rounded-xl">
-        {board.map((state, index) => {
-          return (
-            <Square
-              key={index}
-              state={state}
-              onClick={() => {}}
+    <>
+      <div className="flex flex-col items-center">
+        <div className="mb-[37px]">
+          {
+            <Timer
+              timerState={timerState}
+              startSeconds={180}
+              isStopped={isGameStopped}
+              stopGame={() => {
+                setIsGameStopped(true);
+              }}
             />
-          );
-        })}
+          }
+        </div>
+        <div className="grid gap-1 grid-cols-[minmax(120px,197px)_minmax(120px,197px)_minmax(120px,197px)] grid-rows-[minmax(120px, 197px)_minmax(120px,197px)_minmax(120px,197px)] justify-center shadow-main w-fit rounded-xl">
+          {squareStates.map((state, index) => {
+            return (
+              <Square
+                key={index}
+                state={state}
+                onClick={() => {
+                  if (state || isGameStopped) return;
+                  const newSquareStates = [...squareStates];
+                  newSquareStates[index] = isCrossNext ? "cross" : "zero";
+                  const winner = calculateWinner(newSquareStates);
+                  if (winner) {
+                    setIsGameStopped(true);
+                    if (winner === "cross") {
+                      setWinState("Игрок 1");
+                    } else if (winner === "zero") {
+                      setWinState("Игрок 2");
+                    }
+                  } else if (!newSquareStates.includes(null)) {
+                    setIsGameStopped(true);
+                    setWinState("Ничья");
+                  }
+                  setSquareStates(newSquareStates);
+                  setIsCrossNext(!isCrossNext);
+                }}
+              />
+            );
+          })}
+        </div>
+        <div className="mt-[43px]">
+          <StepPanel
+            isStopped={isGameStopped}
+            isCross={isCrossNext}
+            name={isCrossNext ? "Игрок 1" : "Игрок 2"}
+          />
+        </div>
       </div>
-      <div className="mt-[43px]">
-        <StepPanel
-          isCross={true}
-          name={"Василий Пупкин"}
-        />
-      </div>
-    </div>
+      <CustomModal
+        title={winState === "Ничья" ? "Ничья" : `${winState} победил`}
+        resetGame={resetGame}
+        isOpen={!!winState}
+        setIsOpen={setWinState}
+      />
+    </>
   );
 }

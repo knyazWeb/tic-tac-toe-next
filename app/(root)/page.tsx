@@ -1,13 +1,37 @@
-import GameField from "@/components/gameField/gameField";
-import PlayersPanel from "@/components/playersPanel/playersPanel";
-import Chat from "@/components/chat/chat";
+"use client";
+import CustomButton from "@/components/ui/customButton/customButton";
+import { useRouter } from "next/navigation";
 
 export default function GameFieldPage() {
+  const router = useRouter();
   return (
-    <section className="flex justify-between items-start mt-[37px] px-10">
-      <PlayersPanel />
-      <GameField />
-      <Chat />
+    <section className="flex justify-center items-center h-[calc(100vh-64px)]">
+      <div className="max-w-[500px] flex flex-col gap-7">
+        <CustomButton
+          onClick={() => {
+            router.push("/game-field");
+          }}
+          active={true}
+          size="medium"
+          type="button"
+        >
+          <span className="text-xl">
+            Начать <span className="font-bold">одиночную</span> игру
+          </span>
+        </CustomButton>
+        <CustomButton
+          onClick={() => {
+            router.push("/active-players");
+          }}
+          active={true}
+          size="medium"
+          type="button"
+        >
+          <span className="text-xl">
+            Начать <span className="font-bold">онлайн</span> игру
+          </span>
+        </CustomButton>
+      </div>
     </section>
   );
 }
