@@ -6,7 +6,7 @@ import OnlinePlayProvider from "@/contexts/singlePlayProvider";
 
 export default function GameFieldPage() {
   return (
-    <section className="flex justify-between items-start mt-[37px] px-10">
+    <section className="flex justify-between items-start mt-[37px] px-10 ">
       <OnlinePlayProvider value={false}>
         <PlayersPanel />
         <GameField />
