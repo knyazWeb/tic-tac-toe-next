@@ -4,7 +4,7 @@ import ZeroS from "/public/zeroS.svg";
 
 export default function PlayersPanel() {
   return (
-    <div className="shadow-container w-fit rounded-[20px] p-6">
+    <div className="shadow-container w-fit rounded-[20px] p-6 w-full max-w-[500px]">
       <p className="mb-6 font-bold text-2xl">Игроки</p>
       <div className="flex flex-col gap-5">
         {/*TODO: заменить placehodler на данные */}

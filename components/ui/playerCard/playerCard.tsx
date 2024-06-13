@@ -12,7 +12,6 @@ export default function PlayerCard({ image, name, winrate }: PlayerCardProps) {
       <div>
         <Image
           height={26}
-          quality={70}
           src={image}
           alt=""
         />

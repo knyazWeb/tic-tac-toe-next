@@ -4,6 +4,8 @@ import Square from "@/components/ui/square/square";
 import { useEffect, useState } from "react";
 import calculateWinner from "@/helpers/calculateWinner";
 import { io } from "socket.io-client";
+import StepPanel from "@/components/stepPanel/stepPanel";
+import Timer from "@/components/timer/timer";
 
 // const socket = io(`${process.env.SERVER_HOST}:${process.env.SERVER_PORT}`);
 //
@@ -60,16 +62,25 @@ export default function GameField() {
   // };
 
   return (
-    <div className="grid gap-1 grid-cols-[minmax(120px,197px)_minmax(120px,197px)_minmax(120px,197px)] grid-rows-[minmax(120px, 197px)_minmax(120px,197px)_minmax(120px,197px)] justify-center shadow-main w-fit rounded-xl">
-      {board.map((state, index) => {
-        return (
-          <Square
-            key={index}
-            state={state}
-            onClick={() => {}}
-          />
-        );
-      })}
+    <div className="flex flex-col items-center">
+      <div className="mb-[37px]">{/*<Timer startSeconds={180} />*/}</div>
+      <div className="grid gap-1 grid-cols-[minmax(120px,197px)_minmax(120px,197px)_minmax(120px,197px)] grid-rows-[minmax(120px, 197px)_minmax(120px,197px)_minmax(120px,197px)] justify-center shadow-main w-fit rounded-xl">
+        {board.map((state, index) => {
+          return (
+            <Square
+              key={index}
+              state={state}
+              onClick={() => {}}
+            />
+          );
+        })}
+      </div>
+      <div className="mt-[43px]">
+        <StepPanel
+          isCross={true}
+          name={"Василий Пупкин"}
+        />
+      </div>
     </div>
   );
 }
