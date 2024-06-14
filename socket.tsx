@@ -4,6 +4,8 @@ import { io } from "socket.io-client";
 import { createContext, useContext, useEffect, useState } from "react";
 import { Session } from "next-auth";
 import { useUsers } from "@/contexts/onlineUsersContext";
+import toast from "react-hot-toast";
+import { AcceptModal } from "@/components/acceptModal/acceptModal";
 
 type SocketContextType = {
   socket: any | null;
@@ -23,6 +25,8 @@ export const SocketProvider = ({ children, session }: { children: React.ReactNod
   const [socket, setSocket] = useState(null);
   const { setUsers } = useUsers();
   const [isConnected, setIsConnected] = useState(false);
+  const [invite, setInvite] = useState(null);
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
 
   useEffect(() => {
     const socket = io(`${process.env.NEXT_PUBLIC_SERVER_URL}`);
@@ -37,7 +41,12 @@ export const SocketProvider = ({ children, session }: { children: React.ReactNod
           setUsers(onlineUsers.filter((u) => u.username !== session.user.name));
         });
       }
+      socket.on("game_invite", (invite) => {
+        setInvite(invite);
+        setIsInviteModalOpen(true);
+      });
     });
+
     setSocket(socket);
 
     return () => {
@@ -45,5 +54,16 @@ export const SocketProvider = ({ children, session }: { children: React.ReactNod
     };
   }, []);
 
-  return <SocketContext.Provider value={{ socket, isConnected }}>{children}</SocketContext.Provider>;
+  return (
+    <SocketContext.Provider value={{ socket, isConnected }}>
+      <AcceptModal
+        isOpen={isInviteModalOpen}
+        setIsOpen={setIsInviteModalOpen}
+        invite={invite}
+        onAccept={() => {}}
+        onReject={() => {}}
+      />
+      {children}
+    </SocketContext.Provider>
+  );
 };
