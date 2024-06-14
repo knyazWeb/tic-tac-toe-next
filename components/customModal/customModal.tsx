@@ -57,7 +57,6 @@ export default function CustomModal({ isOpen, setIsOpen, title, resetGame }: Mod
                   type="button"
                   onClick={() => {
                     router.push("/");
-
                     handleClose();
                   }}
                 >

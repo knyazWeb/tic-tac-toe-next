@@ -1,8 +1,7 @@
 import GameField from "@/components/gameField/gameField";
 import PlayersPanel from "@/components/playersPanel/playersPanel";
 import Chat from "@/components/chat/chat";
-
-import OnlinePlayProvider from "@/contexts/singlePlayProvider";
+import { OnlinePlayProvider } from "@/contexts/singlePlayContext";
 
 export default function GameFieldPage() {
   return (

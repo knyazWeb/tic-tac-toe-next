@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.scss";
 import { Toaster } from "react-hot-toast";
+import { SessionProvider } from "next-auth/react";
 
 const roboto = Roboto({
   subsets: ["latin", "cyrillic"],
@@ -22,8 +23,10 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body className={roboto.className}>
-        {children}
-        <Toaster position="bottom-right" />
+        <SessionProvider>
+          {children}
+          <Toaster position="bottom-right" />
+        </SessionProvider>
       </body>
     </html>
   );

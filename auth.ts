@@ -5,6 +5,10 @@ import { loginSchema } from "@/lib/zod";
 import { compare } from "bcrypt-ts";
 import { ZodError } from "zod";
 
+interface UserData extends User {
+  login: string;
+}
+
 async function getUser(login: string) {
   const user = await prisma.user.findUnique({
     where: {
@@ -35,11 +39,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             throw new CredentialsSignin("No user found with that login");
           }
           const valid = await compare(password, user.password);
-
           if (!valid) {
             throw new CredentialsSignin("Password is incorrect");
           }
-
           return user as User;
         } catch (error) {
           if (error instanceof ZodError) {
@@ -55,11 +57,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.name = (user as UserData).login;
       }
       return token;
     },
     session({ session, token }) {
       session.user.id = token.id as string;
+      session.user.name = token.name as string;
       return session;
     },
   },

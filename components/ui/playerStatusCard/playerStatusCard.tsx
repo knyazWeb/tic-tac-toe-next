@@ -1,5 +1,5 @@
 interface PlayerStatusCardProps {
-  status: "Свободен" | "Заблокирован" | "Играет" | "Вне игры";
+  status: string;
   size: "small" | "medium";
 }
 

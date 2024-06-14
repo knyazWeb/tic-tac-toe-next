@@ -3,8 +3,12 @@
 import { Switch } from "@headlessui/react";
 import { useState } from "react";
 
-export default function SwitchToggle() {
-  const [enabled, setEnabled] = useState(false);
+interface SwitchToggleProps {
+  enabled: boolean;
+  setEnabled: (enabled: boolean) => void;
+}
+
+export default function SwitchToggle({ enabled, setEnabled }: SwitchToggleProps) {
   return (
     <Switch
       checked={enabled}
