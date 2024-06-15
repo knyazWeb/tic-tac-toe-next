@@ -17,6 +17,15 @@ export default function OnlineGameField() {
   const [timerState, setTimerState] = useState(room?.timer);
 
   useEffect(() => {
+    if (winState) {
+      setTimeout(() => {
+        setWinState(null);
+        router.push("/active-players");
+      }, 10000);
+    }
+  }, [winState]);
+
+  useEffect(() => {
     socket.on("game_updated", (roomId, room) => {
       setBoard(room.board);
       setTurn(room.turn);
@@ -72,9 +81,9 @@ export default function OnlineGameField() {
         </div>
       </div>
       <CustomModal
-        title={winState === "Ничья" ? "Ничья" : `${winState} победил`}
+        title={winState === "Ничья" ? "Ничья" : `${winState} победил!`}
         resetGame={() => {
-          router.push("/");
+          router.push("/active-players");
         }}
         online={true}
         isOpen={!!winState}

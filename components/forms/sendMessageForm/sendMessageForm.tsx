@@ -5,6 +5,7 @@ import CustomButtonIcon from "@/components/ui/customButtonIcon/customButtonIcon"
 import Send from "/public/send.svg";
 import { useContext } from "react";
 import { OnlinePlayContext } from "@/contexts/singlePlayContext";
+import { useSocket } from "@/socket";
 
 interface Fields {
   message: string;
@@ -13,12 +14,24 @@ interface Fields {
 export default function SendMessageForm() {
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<Fields>();
   const active = useContext(OnlinePlayContext);
+  const { socket, roomId } = useSocket();
+
+  const onSubmit = (data: Fields) => {
+    if (isValid) {
+      socket.emit("chat_message", data.message, roomId);
+      reset();
+    }
+  };
   return (
-    <form className="w-full">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="w-full"
+    >
       <div className="flex gap-3">
         <CustomInput
           autoComplete={"off"}
