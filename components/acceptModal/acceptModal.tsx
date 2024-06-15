@@ -6,20 +6,32 @@ import Cup from "/public/cup.svg";
 import CustomButton from "@/components/ui/customButton/customButton";
 import SecondaryButton from "@/components/ui/secondaryButton/secondaryButton";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 interface AcceptModalProps {
   invite: any;
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
-  onAccept?: () => void;
-  onReject?: () => void;
+  onAccept: () => void;
+  onReject: () => void;
 }
 
 export const AcceptModal = ({ isOpen, setIsOpen, invite, onAccept, onReject }: AcceptModalProps) => {
+  useEffect(() => {
+    if (isOpen) {
+      const timer = setTimeout(() => {
+        setIsOpen(false);
+      }, 10000);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [isOpen]);
+
   const handleClose = () => {
     setIsOpen(false);
   };
-  const router = useRouter();
 
   return (
     <Dialog
@@ -49,6 +61,7 @@ export const AcceptModal = ({ isOpen, setIsOpen, invite, onAccept, onReject }: A
                   type="button"
                   onClick={() => {
                     handleClose();
+                    onAccept();
                   }}
                 >
                   Принять
@@ -59,6 +72,7 @@ export const AcceptModal = ({ isOpen, setIsOpen, invite, onAccept, onReject }: A
                   type="button"
                   onClick={() => {
                     handleClose();
+                    onReject();
                   }}
                 >
                   Отклонить

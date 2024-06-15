@@ -5,7 +5,7 @@ import { useState } from "react";
 
 interface SwitchToggleProps {
   enabled: boolean;
-  setEnabled: (enabled: boolean) => void;
+  setEnabled: () => void;
 }
 
 export default function SwitchToggle({ enabled, setEnabled }: SwitchToggleProps) {

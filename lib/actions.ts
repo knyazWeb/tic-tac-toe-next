@@ -52,3 +52,19 @@ export async function submitLoginForm(formData: FormData) {
   }
   redirect("/");
 }
+
+export async function checkAccess(roomId: any, userId: string): Promise<boolean> {
+  return await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/check-access/${roomId}/${userId}`)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.access) {
+        return true;
+      } else {
+        return false;
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      return false;
+    });
+}

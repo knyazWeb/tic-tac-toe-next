@@ -22,12 +22,13 @@ export default function ActivePlayerPanel() {
           Только свободные
           <SwitchToggle
             enabled={onlyFree}
-            setEnabled={setOnlyFree}
+            setEnabled={() => setOnlyFree(!onlyFree)}
           />
         </div>
       </div>
       <div>
         {users.map((user, index) => {
+          if (onlyFree && user.gameStatus === "В игре") return null;
           if (onlyFree && user.gameStatus === "Свободен") {
             return (
               <ActivePlayerCard
@@ -37,16 +38,15 @@ export default function ActivePlayerPanel() {
                 name={user.username}
               />
             );
-          } else {
-            return (
-              <ActivePlayerCard
-                inviteUser={inviteUser}
-                key={index}
-                status={user.gameStatus}
-                name={user.username}
-              />
-            );
           }
+          return (
+            <ActivePlayerCard
+              inviteUser={inviteUser}
+              key={index}
+              status={user.gameStatus}
+              name={user.username}
+            />
+          );
         })}
       </div>
     </div>

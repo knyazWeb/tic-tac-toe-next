@@ -45,7 +45,6 @@ export default function LoginForm() {
     }
     setIsSubmitting(false);
   };
-
   return (
     <form
       className="w-full"

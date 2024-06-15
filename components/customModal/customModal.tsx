@@ -11,10 +11,11 @@ interface ModalProps {
   title: string;
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
+  online?: boolean;
   resetGame: () => void;
 }
 
-export default function CustomModal({ isOpen, setIsOpen, title, resetGame }: ModalProps) {
+export default function CustomModal({ isOpen, setIsOpen, title, online, resetGame }: ModalProps) {
   const handleClose = () => {
     setIsOpen(false);
   };
@@ -40,17 +41,19 @@ export default function CustomModal({ isOpen, setIsOpen, title, resetGame }: Mod
               />
               <Dialog.Title className="text-2xl font-bold mb-5">{title}</Dialog.Title>
               <div className="flex flex-col gap-3 w-full">
-                <CustomButton
-                  size="medium"
-                  active={true}
-                  type="button"
-                  onClick={() => {
-                    resetGame();
-                    handleClose();
-                  }}
-                >
-                  Новая игра
-                </CustomButton>
+                {!online && (
+                  <CustomButton
+                    size="medium"
+                    active={true}
+                    type="button"
+                    onClick={() => {
+                      resetGame();
+                      handleClose();
+                    }}
+                  >
+                    Новая игра
+                  </CustomButton>
+                )}
                 <SecondaryButton
                   active={true}
                   size="medium"

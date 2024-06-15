@@ -5,7 +5,6 @@ interface CustomButtonProps {
   type: "submit" | "button" | "reset";
   children: React.ReactNode;
   active?: boolean;
-
   onClick?: () => void;
 }
 
