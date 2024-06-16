@@ -4,16 +4,17 @@ import ActivePlayerCard from "@/components/ui/activePlayerCard/activePlayerCard"
 
 import { useUsers } from "@/contexts/onlineUsersContext";
 import { useState } from "react";
-import { useSocket } from "@/socket";
+import { useSocket } from "@/socket/socket";
 
 export default function ActivePlayerPanel() {
   const { users } = useUsers();
-  const soket = useSocket();
+  const { socket } = useSocket();
   const [onlyFree, setOnlyFree] = useState(false);
 
   const inviteUser = (username: string) => {
-    soket.socket.emit("invite_user", username);
+    socket.emit("invite_user", username);
   };
+
   return (
     <div className="w-full max-w-[780px]  max-h-[855px] overflow-y-scroll scrollbar-hide p-8 bg-white rounded-[40px] shadow-container">
       <div className="flex justify-between items-center mb-6">

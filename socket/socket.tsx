@@ -3,24 +3,20 @@
 import { io } from "socket.io-client";
 import { createContext, useContext, useEffect, useState } from "react";
 import { Session } from "next-auth";
-import { useUsers } from "@/contexts/onlineUsersContext";
+import { UserOnline, useUsers } from "@/contexts/onlineUsersContext";
 import { AcceptModal } from "@/components/acceptModal/acceptModal";
 import { useRouter } from "next/navigation";
-import { checkAccess } from "@/lib/actions";
-
-type SocketContextType = {
-  socket: any | null;
-  roomId: string | null;
-  players: string[];
-  room: any;
-  isConnected: boolean;
-};
+import { IInvite, IRoom, SocketContextType } from "@/socket/interfaces";
 
 const SocketContext = createContext<SocketContextType>({
   socket: null,
   roomId: null,
-  room: null,
-  players: [],
+  room: {
+    players: [],
+    board: [],
+    turn: "",
+    timer: 0,
+  },
   isConnected: false,
 });
 
@@ -29,46 +25,48 @@ export const useSocket = () => {
 };
 
 export const SocketProvider = ({ children, session }: { children: React.ReactNode; session: Session }) => {
-  const [socket, setSocket] = useState(null);
-  const { setUsers } = useUsers();
   const [isConnected, setIsConnected] = useState(false);
-  const [invite, setInvite] = useState(null);
+  const { setUsers } = useUsers();
+  const [invite, setInvite] = useState<IInvite | null>(null);
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
-  const router = useRouter();
-  const [roomId, setRoomId] = useState<string | null>(null);
   const [room, setRoom] = useState<any>(null);
-  const [players, setPlayers] = useState<string[]>([]);
+  const [roomId, setRoomId] = useState<string | null>(null);
+  const [socket, setSocket] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     const socket = io(`${process.env.NEXT_PUBLIC_SERVER_URL}`);
 
+    // Connect to server when open home page (authorized)
     socket.on("connect", () => {
-      console.log("connected to server");
+      console.log("Connected to server");
       setIsConnected(true);
 
+      // Registration user in socket when user is authorized
       if (session.user) {
         socket.emit("register", session.user.name, session.user.id);
+
+        // Get online users
         socket.on("users_online", (onlineUsers) => {
-          setUsers(onlineUsers.filter((u) => u.username !== session.user.name));
+          setUsers(onlineUsers.filter((userOnline: UserOnline) => userOnline.username !== session.user.name));
         });
       }
-      socket.on("game_invite", (invite) => {
+
+      // Listen to the server for an invitation to the game
+      socket.on("game_invite", (invite: IInvite) => {
         setInvite(invite);
         setIsInviteModalOpen(true);
       });
 
-      socket.on("room_joined", async (roomId, room) => {
-        const access: boolean = await checkAccess(roomId, session.user.id);
-        if (access) {
-          setRoom(room);
+      // Listen when game starts
+      socket.on("game_started", (room: IRoom, roomId: string) => {
+        if (room && roomId) {
           setRoomId(roomId);
+          setRoom(room);
           router.push(`/game-field/${roomId}`);
         } else {
-          router.push("/");
+          router.push("/active-players");
         }
-      });
-      socket.on("player_names", (players) => {
-        setPlayers(players);
       });
     });
 
@@ -76,21 +74,28 @@ export const SocketProvider = ({ children, session }: { children: React.ReactNod
 
     return () => {
       socket.off("connect");
+      socket.off("game_invite");
+      socket.off("game_started");
+      socket.off("users_online");
+
+      // Disconnect
+      socket.close();
     };
   }, []);
 
   return (
-    <SocketContext.Provider value={{ socket, roomId, room, players, isConnected }}>
+    <SocketContext.Provider value={{ socket, roomId: invite?.roomId || roomId, room, isConnected }}>
       {/*TODO: баг с модалкой (модалка ничьи и принятия приглашения когда вместе курсор не работает)*/}
       <AcceptModal
         isOpen={isInviteModalOpen}
         setIsOpen={setIsInviteModalOpen}
         invite={invite}
         onAccept={() => {
-          socket.emit("accept_invite", invite.room);
+          socket.emit("accept_invite", invite.roomId);
           setIsInviteModalOpen(false);
         }}
         onReject={() => {
+          socket.emit("reject_invite", invite.roomId);
           setIsInviteModalOpen(false);
         }}
       />

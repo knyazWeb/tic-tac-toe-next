@@ -47,6 +47,7 @@ export const AcceptModal = ({ isOpen, setIsOpen, invite, onAccept, onReject }: A
             <div className="flex flex-col items-center ">
               <Image
                 className="mb-5"
+                priority={true}
                 width={132}
                 src={Cup}
                 alt=""

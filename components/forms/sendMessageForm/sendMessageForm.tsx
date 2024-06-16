@@ -5,7 +5,7 @@ import CustomButtonIcon from "@/components/ui/customButtonIcon/customButtonIcon"
 import Send from "/public/send.svg";
 import { useContext } from "react";
 import { OnlinePlayContext } from "@/contexts/singlePlayContext";
-import { useSocket } from "@/socket";
+import { useSocket } from "@/socket/socket";
 
 interface Fields {
   message: string;

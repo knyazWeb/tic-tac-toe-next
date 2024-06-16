@@ -1,23 +1,24 @@
 "use client";
 import React, { createContext, useContext, useState } from "react";
 
-interface User {
+export interface UserOnline {
   username: string;
-  blocked: any[];
-  room: null | string;
+  socketId: string;
+  room: string | null;
   gameStatus: string;
+  blocked: string[];
 }
 
 const OnlineUsersContext = createContext<{
-  users: User[];
-  setUsers: React.Dispatch<React.SetStateAction<User[]>>;
+  users: UserOnline[];
+  setUsers: React.Dispatch<React.SetStateAction<UserOnline[]>>;
 }>({
   users: [],
   setUsers: () => {},
 });
 
 export const OnlineUsersProvider = ({ children }: { children: React.ReactNode }) => {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<UserOnline[]>([]);
 
   return <OnlineUsersContext.Provider value={{ users, setUsers }}>{children}</OnlineUsersContext.Provider>;
 };

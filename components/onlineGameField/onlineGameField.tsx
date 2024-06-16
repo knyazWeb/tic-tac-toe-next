@@ -5,41 +5,55 @@ import calculateWinner from "@/helpers/calculateWinner";
 import Square from "@/components/ui/square/square";
 import StepPanel from "@/components/stepPanel/stepPanel";
 import CustomModal from "@/components/customModal/customModal";
-import { useSocket } from "@/socket";
+import { useSocket } from "@/socket/socket";
 import { useRouter } from "next/navigation";
+import { IRoom } from "@/socket/interfaces";
 
 export default function OnlineGameField() {
-  const { socket, room, roomId, players } = useSocket();
+  const { socket, room, roomId } = useSocket();
   const router = useRouter();
-  const [board, setBoard] = useState(room?.board);
-  const [turn, setTurn] = useState(room?.turn);
+  const [board, setBoard] = useState(room.board);
+  const [turn, setTurn] = useState(room.turn);
   const [winState, setWinState] = useState(null);
-  const [timerState, setTimerState] = useState(room?.timer);
+  const [timerState, setTimerState] = useState(room.timer);
+
+  const makeMove = (roomId: string, move: number) => {
+    if (board[move]) return;
+    socket.emit("make_move", roomId, move);
+  };
+
+  // FIXME: если быстро выйти в меню и зайти в новую игру перебрасывает на главную
+  // useEffect(() => {
+  //   if (winState) {
+  //     setTimeout(() => {
+  //       setWinState(null);
+  //       router.push("/active-players");
+  //     }, 10000);
+  //   }
+  // }, [winState]);
 
   useEffect(() => {
-    if (winState) {
-      setTimeout(() => {
-        setWinState(null);
-        router.push("/active-players");
-      }, 10000);
-    }
-  }, [winState]);
-
-  useEffect(() => {
-    socket.on("game_updated", (roomId, room) => {
+    socket.on("game_updated", (_roomId: string, room: IRoom) => {
       setBoard(room.board);
       setTurn(room.turn);
       setTimerState(room.timer);
     });
 
-    socket.on("game_over", (winner) => {
-      setWinState(winner);
+    socket.on("game_over", (winnerUsername: string) => {
+      setWinState(winnerUsername);
     });
+
+    socket.on("game_draw", (draw: string) => {
+      setWinState(draw);
+    });
+
+    return () => {
+      socket.off("game_updated");
+      socket.off("game_over");
+      socket.off("game_draw");
+    };
   }, [socket]);
-  const makeMove = (step) => {
-    if (board[step]) return;
-    socket.emit("make_move", roomId, step);
-  };
+
   return (
     <>
       <div className="flex flex-col items-center">
@@ -56,7 +70,7 @@ export default function OnlineGameField() {
           }
         </div>
         <div className="grid gap-1 grid-cols-[minmax(120px,197px)_minmax(120px,197px)_minmax(120px,197px)] grid-rows-[minmax(120px, 197px)_minmax(120px,197px)_minmax(120px,197px)] justify-center shadow-main w-fit rounded-xl">
-          {board?.map((state, index) => {
+          {board.map((state, index) => {
             const winInfo = calculateWinner(board);
             const isWinningSquare = winInfo ? winInfo.line.includes(index) : false;
 
@@ -66,7 +80,7 @@ export default function OnlineGameField() {
                 state={state === room.players[0] ? "cross" : state === room.players[1] ? "zero" : null}
                 isWinning={isWinningSquare}
                 onClick={() => {
-                  makeMove(index);
+                  makeMove(roomId, index);
                 }}
               />
             );
@@ -76,7 +90,7 @@ export default function OnlineGameField() {
           <StepPanel
             isStopped={!!winState}
             isCross={turn === room.players[0]}
-            name={turn === room.players[0] ? players[0] : players[1]}
+            name={turn === room.players[0] ? room.players[0] : room.players[1]}
           />
         </div>
       </div>

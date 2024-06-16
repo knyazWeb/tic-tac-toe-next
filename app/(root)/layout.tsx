@@ -1,5 +1,5 @@
 import Navbar from "@/components/navbar/navbar";
-import { SocketProvider } from "@/socket";
+import { SocketProvider } from "@/socket/socket";
 import { auth } from "@/auth";
 import { OnlineUsersProvider } from "@/contexts/onlineUsersContext";
 
