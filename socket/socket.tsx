@@ -84,7 +84,7 @@ export const SocketProvider = ({ children, session }: { children: React.ReactNod
   }, []);
 
   return (
-    <SocketContext.Provider value={{ socket, roomId: invite?.roomId || roomId, room, isConnected }}>
+    <SocketContext.Provider value={{ socket, roomId, room, isConnected }}>
       {/*TODO: баг с модалкой (модалка ничьи и принятия приглашения когда вместе курсор не работает)*/}
       <AcceptModal
         isOpen={isInviteModalOpen}

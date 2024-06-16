@@ -15,22 +15,26 @@ export default function OnlineGameField() {
   const [board, setBoard] = useState(room.board);
   const [turn, setTurn] = useState(room.turn);
   const [winState, setWinState] = useState(null);
-  const [timerState, setTimerState] = useState(room.timer);
+  const [timerState, setTimerState] = useState(room.timer - 1);
 
   const makeMove = (roomId: string, move: number) => {
     if (board[move]) return;
     socket.emit("make_move", roomId, move);
   };
 
-  // FIXME: если быстро выйти в меню и зайти в новую игру перебрасывает на главную
-  // useEffect(() => {
-  //   if (winState) {
-  //     setTimeout(() => {
-  //       setWinState(null);
-  //       router.push("/active-players");
-  //     }, 10000);
-  //   }
-  // }, [winState]);
+  useEffect(() => {
+    let redirectTimeout: NodeJS.Timeout;
+    if (winState) {
+      redirectTimeout = setTimeout(() => {
+        setWinState(null);
+        router.push("/active-players");
+      }, 10000);
+    }
+
+    return () => {
+      clearTimeout(redirectTimeout);
+    };
+  }, [winState]);
 
   useEffect(() => {
     socket.on("game_updated", (_roomId: string, room: IRoom) => {
@@ -51,6 +55,7 @@ export default function OnlineGameField() {
       socket.off("game_updated");
       socket.off("game_over");
       socket.off("game_draw");
+      socket.emit("leave_game", roomId);
     };
   }, [socket]);
 
