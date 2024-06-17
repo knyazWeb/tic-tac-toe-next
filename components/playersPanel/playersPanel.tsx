@@ -3,7 +3,7 @@ import PlayerCard from "@/components/ui/playerCard/playerCard";
 import CrossS from "/public/crossS.svg";
 import ZeroS from "/public/zeroS.svg";
 import { useContext } from "react";
-import { OnlinePlayContext } from "@/contexts/singlePlayContext";
+import { OnlinePlayContext } from "@/contexts/onlinePlayContext";
 import { useSocket } from "@/socket/socket";
 
 export default function PlayersPanel() {

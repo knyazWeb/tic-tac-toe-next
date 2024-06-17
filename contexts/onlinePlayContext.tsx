@@ -10,12 +10,12 @@ export const OnlinePlayProvider = ({ children, value }: { children: React.ReactN
   const router = useRouter();
 
   useEffect(() => {
-    if (!room) {
+    if (!room && value === true) {
       router.push("/active-players");
     }
   }, [room, router]);
 
-  if (!room) {
+  if (!room && value === true) {
     return null;
   }
   return <OnlinePlayContext.Provider value={value}>{children}</OnlinePlayContext.Provider>;

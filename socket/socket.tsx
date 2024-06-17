@@ -35,7 +35,9 @@ export const SocketProvider = ({ children, session }: { children: React.ReactNod
   const router = useRouter();
 
   useEffect(() => {
-    const socket = io(`${process.env.NEXT_PUBLIC_SERVER_URL}`);
+    const socket = io(`${process.env.NEXT_PUBLIC_SERVER_URL}`, {
+      reconnectionAttempts: 3,
+    });
 
     // Connect to server when open home page (authorized)
     socket.on("connect", () => {

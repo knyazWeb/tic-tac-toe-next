@@ -1,4 +1,4 @@
-import { OnlinePlayProvider } from "@/contexts/singlePlayContext";
+import { OnlinePlayProvider } from "@/contexts/onlinePlayContext";
 import PlayersPanel from "@/components/playersPanel/playersPanel";
 import Chat from "@/components/chat/chat";
 import OnlineGameField from "@/components/onlineGameField/onlineGameField";
