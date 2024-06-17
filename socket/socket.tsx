@@ -85,7 +85,8 @@ export const SocketProvider = ({ children, session }: { children: React.ReactNod
 
   return (
     <SocketContext.Provider value={{ socket, roomId, room, isConnected }}>
-      {/*TODO: баг с модалкой (модалка ничьи и принятия приглашения когда вместе курсор не работает)*/}
+      {/*TODO: bag with two modals at one time
+       */}
       <AcceptModal
         isOpen={isInviteModalOpen}
         setIsOpen={setIsInviteModalOpen}

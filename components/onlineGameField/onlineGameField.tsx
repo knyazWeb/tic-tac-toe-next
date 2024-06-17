@@ -6,16 +6,18 @@ import Square from "@/components/ui/square/square";
 import StepPanel from "@/components/stepPanel/stepPanel";
 import CustomModal from "@/components/customModal/customModal";
 import { useSocket } from "@/socket/socket";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { IRoom } from "@/socket/interfaces";
 
 export default function OnlineGameField() {
   const { socket, room, roomId } = useSocket();
   const router = useRouter();
+
   const [board, setBoard] = useState(room.board);
   const [turn, setTurn] = useState(room.turn);
   const [winState, setWinState] = useState(null);
   const [timerState, setTimerState] = useState(room.timer - 1);
+  const [isMounted, setIsMounted] = useState(false);
 
   const makeMove = (roomId: string, move: number) => {
     if (board[move]) return;
@@ -28,7 +30,7 @@ export default function OnlineGameField() {
       redirectTimeout = setTimeout(() => {
         setWinState(null);
         router.push("/active-players");
-      }, 10000);
+      }, 3000);
     }
 
     return () => {
@@ -37,6 +39,7 @@ export default function OnlineGameField() {
   }, [winState]);
 
   useEffect(() => {
+    setIsMounted(true);
     socket.on("game_updated", (_roomId: string, room: IRoom) => {
       setBoard(room.board);
       setTurn(room.turn);
@@ -55,9 +58,12 @@ export default function OnlineGameField() {
       socket.off("game_updated");
       socket.off("game_over");
       socket.off("game_draw");
-      socket.emit("leave_game", roomId);
+      if (isMounted) {
+        socket.emit("leave_game", roomId);
+      }
+      setIsMounted(false);
     };
-  }, [socket]);
+  }, [socket, isMounted]);
 
   return (
     <>
