@@ -6,6 +6,7 @@ import StepPanel from "@/components/stepPanel/stepPanel";
 import Timer from "@/components/timer/timer";
 import calculateWinner from "@/helpers/calculateWinner";
 import CustomModal from "@/components/customModal/customModal";
+import { useRouter } from "next/navigation";
 
 export default function GameField() {
   const [squareStates, setSquareStates] = useState(Array(9).fill(null));
@@ -13,6 +14,7 @@ export default function GameField() {
   const [isCrossNext, setIsCrossNext] = useState(true);
   const [winState, setWinState] = useState(null);
   const [timerState, setTimerState] = useState(false);
+  const router = useRouter();
 
   const resetGame = () => {
     setTimerState(true);
@@ -24,6 +26,20 @@ export default function GameField() {
       setTimerState(false);
     }, 0);
   };
+
+  useEffect(() => {
+    let redirectTimeout: NodeJS.Timeout;
+    if (winState) {
+      redirectTimeout = setTimeout(() => {
+        setWinState(null);
+        router.push("/");
+      }, 3000);
+    }
+
+    return () => {
+      clearTimeout(redirectTimeout);
+    };
+  }, [winState]);
 
   useEffect(() => {
     if (isGameStopped && winState === null) {

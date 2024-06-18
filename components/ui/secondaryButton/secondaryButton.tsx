@@ -18,7 +18,7 @@ export default function SecondaryButton({ size, children, active, type, blockIco
       disabled={!active}
       type={type}
       onClick={onClick}
-      className={`w-full bg-[#F7F7F7] rounded-[12px] text-textDark ${!active ? "opacity-50" : ""} ${size === "small" ? "py-2 px-4 text-sm" : "py-3 px-5 text-base"}  hover:bg-[#DCDCDF] transition-all duration-200 ease-in-out`}
+      className={`w-full bg-[#F7F7F7] rounded-[12px] text-textDark font-medium ${!active ? "opacity-50" : ""} ${size === "small" ? "py-2 px-4 text-sm" : "py-3 px-5 text-base"}  hover:bg-[#DCDCDF] transition-all duration-200 ease-in-out`}
     >
       {blockIcon && (
         <Image
