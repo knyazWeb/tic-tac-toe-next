@@ -5,7 +5,7 @@ import OnlineGameField from "@/components/onlineGameField/onlineGameField";
 
 export default function Page({ params }: { params: { id: string } }) {
   return (
-    <section className="flex justify-between items-start mt-[37px] px-10 ">
+    <section className="flex justify-between  gap-3 items-start mt-[37px] px-10 ">
       <OnlinePlayProvider value={true}>
         <PlayersPanel />
         <OnlineGameField />

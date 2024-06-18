@@ -15,8 +15,8 @@ export default function Loader() {
               <th className="text-start pb-2 w-[20%]"></th>
             </tr>
           </thead>
-          <tbody></tbody>
         </table>
+        <div className="text-center mt-10">Загрузка...</div>
       </div>
     </div>
   );

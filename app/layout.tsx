@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={roboto.className}>
+      <body className={`${roboto.className} tablet:pt-[64px]`}>
         <SessionProvider>
           {children}
           <Toaster position="bottom-right" />

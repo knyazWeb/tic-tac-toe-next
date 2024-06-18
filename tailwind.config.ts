@@ -8,6 +8,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        laptop: { max: "1130px" },
+        tablet: { max: "900px" },
+        mobile: { max: "700px" },
+      },
       colors: {
         textDark: "#373745",
         textLight: "#fff",

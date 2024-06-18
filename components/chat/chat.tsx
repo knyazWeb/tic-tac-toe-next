@@ -49,7 +49,7 @@ export default function Chat() {
     };
   }, []);
   return (
-    <div className="relative max-w-[420px] w-full self-end max-h-[665px] flex flex-col justify-end pb-[90px] gap-3">
+    <div className="relative max-w-[420px] shrink-0 grow-0 w-full self-end max-h-[665px] flex flex-col justify-end pb-[90px] gap-3">
       {!isScrolledToTop && <Fade className={"absolute top-0 left-0 h-[70px] to-white/0 from-[#F6F6F6]/100 "} />}
 
       <div

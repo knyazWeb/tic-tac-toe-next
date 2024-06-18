@@ -14,7 +14,7 @@ export default function Loader() {
           />
         </div>
       </div>
-      <div></div>
+      <div className="text-center mt-10">Загрузка...</div>
     </div>
   );
 }
