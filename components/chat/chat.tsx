@@ -1,7 +1,7 @@
 "use client";
 import SendMessageForm from "@/components/forms/sendMessageForm/sendMessageForm";
 import MessageCard from "@/components/ui/messageCard/messageCard";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSocket } from "@/socket/socket";
 import Fade from "@/components/chat/fade/fade";
 
@@ -14,6 +14,28 @@ interface IMessage {
 export default function Chat() {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const { socket, room } = useSocket();
+  const [isScrolledToBottom, setIsScrolledToBottom] = useState(true);
+  const [isScrolledToTop, setIsScrolledToTop] = useState(true);
+  const chatRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    const { scrollTop, scrollHeight, clientHeight } = chatRef.current;
+    setIsScrolledToBottom(scrollTop + clientHeight >= scrollHeight - 5);
+    setIsScrolledToTop(scrollTop === 0);
+  };
+
+  useEffect(() => {
+    const chatContainer = chatRef.current;
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  }, [messages]);
+
+  useEffect(() => {
+    const chatContainer = chatRef.current;
+    chatContainer.addEventListener("scroll", handleScroll);
+    return () => {
+      chatContainer.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     if (room) {
@@ -27,8 +49,13 @@ export default function Chat() {
     };
   }, []);
   return (
-    <div className=" max-w-[420px] w-full self-end max-h-[665px] flex flex-col justify-end pb-[90px] gap-3">
-      <div className="relative flex flex-col gap-3 overflow-y-scroll scrollbar-hide">
+    <div className="relative max-w-[420px] w-full self-end max-h-[665px] flex flex-col justify-end pb-[90px] gap-3">
+      {!isScrolledToTop && <Fade className={"absolute top-0 left-0 h-[70px] to-white/0 from-[#F6F6F6]/100 "} />}
+
+      <div
+        ref={chatRef}
+        className="flex flex-col gap-3 overflow-y-scroll scrollbar-hide pb-1"
+      >
         {messages.length > 0 ? (
           messages.map((message, index) => {
             let date = new Date(message?.time);
@@ -50,7 +77,9 @@ export default function Chat() {
         )}
       </div>
       <div className="relative">
-        {/*{messages.length > 0 && <Fade position="bottom" />}*/}
+        {!isScrolledToBottom && (
+          <Fade className={"absolute -top-[70px] left-0 h-[70px] from-white/0 to-[#F6F6F6]/100 "} />
+        )}
         <SendMessageForm />
       </div>
     </div>

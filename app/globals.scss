@@ -4,6 +4,7 @@
 
 
 body {
+  scroll-behavior: smooth;
   @apply bg-bgGray text-base font-normal not-italic antialiased text-textDark;
 }
 
