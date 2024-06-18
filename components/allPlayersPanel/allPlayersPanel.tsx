@@ -6,7 +6,7 @@ import PlayerStatusCard from "@/components/ui/playerStatusCard/playerStatusCard"
 export default async function AllPlayersPanel() {
   const allUsers = await getAllUsers();
   return (
-    <div className="w-full max-w-[800px]  max-h-[855px] overflow-y-scroll scrollbar-hide p-8 bg-white rounded-[40px] shadow-container">
+    <div className="w-full max-w-[1000px]  max-h-[855px] overflow-y-scroll scrollbar-hide p-8 bg-white rounded-[40px] shadow-container">
       <div className="flex justify-between items-center mb-6">
         <p className="text-2xl font-bold">Список игроков</p>
       </div>
@@ -14,10 +14,10 @@ export default async function AllPlayersPanel() {
         <table className="w-full">
           <thead>
             <tr>
-              <th className="text-start pb-2">ФИО</th>
-              <th className="text-start pb-2">Статус</th>
-              <th className="text-start pb-2">Создан</th>
-              <th className="text-start pb-2"></th>
+              <th className="text-start pb-2 w-[40%]">ФИО</th>
+              <th className="text-start pb-2 w-[20%]">Статус</th>
+              <th className="text-start pb-2 w-[20%]">Создан</th>
+              <th className="text-start pb-2 w-[20%]"></th>
             </tr>
           </thead>
           <tbody>
@@ -32,19 +32,19 @@ export default async function AllPlayersPanel() {
               return (
                 <tr
                   key={user.id}
-                  className="border-b border-t  border-t-gray-200 border-b-gray-200
+                  className="border-b border-t border-t-gray-200 border-b-gray-200
                  "
                 >
-                  <td className="w-[40%] py-2">{user.login}</td>
+                  <td className="py-2">{user.login}</td>
                   {/*TODO: изменить блокирован если пользователь заблокирован*/}
-                  <td className="w-[18%] py-2 pr-7">
+                  <td className="py-2 pr-10">
                     <PlayerStatusCard
                       status="Активен"
                       size="medium"
                     />
                   </td>
                   <td className="py-2">{createdDate}</td>
-                  <td className="max-w-[200px] w-full block py-2">
+                  <td className="py-2">
                     {/*TODO: изменить блокирован если пользователь заблокирован*/}
                     <SecondaryButton
                       size="small"
