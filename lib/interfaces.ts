@@ -3,4 +3,5 @@ export interface User {
   login: string;
   password: string;
   created_at: Date;
+  blocked: string[];
 }

@@ -69,3 +69,57 @@ export async function checkAccess(roomId: any, username: string): Promise<boolea
       return false;
     });
 }
+
+export async function blockUser(name: string, bannedName: string) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        login: name,
+      },
+    });
+
+    if (user) {
+      const updatedBlockedUsers = [...user.blocked, bannedName];
+
+      await prisma.user.update({
+        where: {
+          login: name,
+        },
+        data: {
+          blocked: updatedBlockedUsers,
+        },
+      });
+    } else {
+      throw new Error("User not found");
+    }
+  } catch (error) {
+    return error.message;
+  }
+}
+
+export async function unblockUser(name: string, bannedName: string) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        login: name,
+      },
+    });
+
+    if (user) {
+      const updatedBlockedUsers = user.blocked.filter((user) => user !== bannedName);
+
+      await prisma.user.update({
+        where: {
+          login: name,
+        },
+        data: {
+          blocked: updatedBlockedUsers,
+        },
+      });
+    } else {
+      throw new Error("User not found");
+    }
+  } catch (error) {
+    return error.message;
+  }
+}

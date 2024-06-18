@@ -7,6 +7,7 @@ import { UserOnline, useUsers } from "@/contexts/onlineUsersContext";
 import { AcceptModal } from "@/components/acceptModal/acceptModal";
 import { useRouter } from "next/navigation";
 import { IInvite, IRoom, SocketContextType } from "@/socket/interfaces";
+import { User } from "@/lib/interfaces";
 
 const SocketContext = createContext<SocketContextType>({
   socket: null,
@@ -26,6 +27,7 @@ export const useSocket = () => {
 
 export const SocketProvider = ({ children, session }: { children: React.ReactNode; session: Session }) => {
   const [isConnected, setIsConnected] = useState(false);
+
   const { setUsers } = useUsers();
   const [invite, setInvite] = useState<IInvite | null>(null);
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
