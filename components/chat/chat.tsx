@@ -45,11 +45,11 @@ export default function Chat() {
     }
 
     return () => {
-      socket.off("chat_message");
+      socket?.off("chat_message");
     };
   }, []);
   return (
-    <div className="relative max-w-[420px] shrink-0 grow-0 w-full self-end max-h-[665px] flex flex-col justify-end pb-[90px] gap-3">
+    <div className="relative max-w-[420px] shrink-0 grow-0 w-full self-end max-h-[665px] flex flex-col justify-end pb-[90px] gap-3 mobile:pb-[10px]">
       {!isScrolledToTop && <Fade className={"absolute top-0 left-0 h-[70px] to-white/0 from-[#F6F6F6]/100 "} />}
 
       <div
@@ -73,7 +73,7 @@ export default function Chat() {
             );
           })
         ) : (
-          <div className="text-center text-[#898993] mb-4">Сообщений ещё нет</div>
+          <div className="text-center text-[#898993] mb-4 mobile:hidden">Сообщений ещё нет</div>
         )}
       </div>
       <div className="relative">

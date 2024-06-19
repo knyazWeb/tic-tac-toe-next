@@ -16,6 +16,8 @@ export default function GameField() {
   const [timerState, setTimerState] = useState(false);
   const router = useRouter();
 
+  
+
   const resetGame = () => {
     setTimerState(true);
     setSquareStates(Array(9).fill(null));
@@ -46,22 +48,30 @@ export default function GameField() {
       setWinState("Ничья");
     }
   }, [isGameStopped]);
+  
   return (
     <>
       <div className="flex flex-col items-center">
-        <div className="mb-[37px]">
+        <div className="mb-[37px] mobile:mb-[15px]">
           {
             <Timer
               timerState={timerState}
-              startSeconds={180}
+              startSeconds={120}
               isStopped={isGameStopped}
               stopGame={() => {
-                setIsGameStopped(true);
+                 setIsGameStopped(true);
               }}
             />
           }
         </div>
-        <div className="grid gap-1 grid-cols-[minmax(120px,197px)_minmax(120px,197px)_minmax(120px,197px)] grid-rows-[minmax(120px, 197px)_minmax(120px,197px)_minmax(120px,197px)] justify-center shadow-main w-fit rounded-xl">
+        <div className="hidden mobile:block mobile:mb-6">
+          <StepPanel
+            isStopped={isGameStopped}
+            isCross={isCrossNext}
+            name={isCrossNext ? "Игрок 1" : "Игрок 2"}
+          />
+        </div>
+        <div className="grid gap-1 grid-cols-[minmax(100px,197px)_minmax(100px,197px)_minmax(100px,197px)] grid-rows-[minmax(100px, 197px)_minmax(100px,197px)_minmax(100px,197px)] justify-center shadow-main w-fit rounded-xl ">
           {squareStates.map((state, index) => {
             const winInfo = calculateWinner(squareStates);
             const isWinningSquare = winInfo ? winInfo.line.includes(index) : false;
@@ -93,7 +103,7 @@ export default function GameField() {
             );
           })}
         </div>
-        <div className="mt-[43px]">
+        <div className="mt-[43px] mobile:hidden">
           <StepPanel
             isStopped={isGameStopped}
             isCross={isCrossNext}

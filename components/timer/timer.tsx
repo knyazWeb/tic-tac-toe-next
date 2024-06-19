@@ -15,15 +15,17 @@ export default function Timer({ startSeconds, isStopped, timerState, stopGame }:
   const resetTimer = () => {
     setTime(startSeconds);
   };
+  
+  useEffect(() => {
+    if (time === 0) {
+      stopGame();
+    }
+  }, [time]);
 
   useEffect(() => {
     const timerId = setInterval(() => {
       if (!isStopped) {
         setTime((prevTime) => {
-          if (prevTime === 0) {
-            stopGame();
-            return prevTime;
-          }
           return prevTime - 1;
         });
       }
@@ -43,7 +45,7 @@ export default function Timer({ startSeconds, isStopped, timerState, stopGame }:
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
   return (
-    <div className="w-full max-w-[140px] bg-[#EDEDED] p-6 font-black text-[34px] rounded-xl">
+    <div className="w-full max-w-[140px] bg-[#EDEDED] p-6 font-black text-[34px] rounded-xl mobile:h-fit mobile:text-base mobile:py-2 mobile:px-5">
       {" "}
       {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
     </div>

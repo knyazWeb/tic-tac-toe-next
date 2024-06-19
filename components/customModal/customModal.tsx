@@ -17,7 +17,7 @@ interface ModalProps {
 
 export default function CustomModal({ isOpen, setIsOpen, title, online, resetGame }: ModalProps) {
   const handleClose = () => {
-    setIsOpen(false);
+    setIsOpen(null);
   };
   const router = useRouter();
 
@@ -35,6 +35,7 @@ export default function CustomModal({ isOpen, setIsOpen, title, online, resetGam
             <div className="flex flex-col items-center ">
               <Image
                 className="mb-5"
+                priority={true}
                 width={132}
                 src={Cup}
                 alt=""

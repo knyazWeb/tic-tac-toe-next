@@ -11,15 +11,16 @@ interface StepPanelProps {
 export default function StepPanel({ isCross, isStopped, name }: StepPanelProps) {
   if (isStopped)
     return (
-      <div className="w-full max-w-[400px] bg-textDark text-white flex text-[20px] gap-3 rounded-xl items-center py-3 px-[69px]">
+      <div className="w-full max-w-[400px] bg-textDark text-white flex text-[20px] gap-3 rounded-xl items-center py-3 px-[69px] mobile:text-sm">
         <span>Игра окончена</span>
       </div>
     );
   return (
-    <div className="w-full max-w-[400px] bg-textDark text-white flex text-[20px] gap-3 rounded-xl items-center py-3 px-[69px]">
+    <div className="w-full max-w-[400px] bg-textDark text-white flex text-[20px] gap-3 rounded-xl items-center py-3 px-[69px] mobile:text-sm">
       <span>Ходит</span>
       <div>
         <Image
+        className="mobile:w-[17px]"
           width={24}
           src={isCross ? CrossS : ZeroS}
           alt=""
