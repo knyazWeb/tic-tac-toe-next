@@ -1,9 +1,11 @@
+import { auth } from "@/auth";
 import HistoryGamePanel from "@/components/historyGamePanel/historyGamePanel";
 
-export default function GameHistoryPage() {
+export default async function GameHistoryPage() {
+  const session = await auth();
   return (
     <div className="flex justify-center items-center h-[calc(100vh-64px)]">
-      <HistoryGamePanel />
+      <HistoryGamePanel session={session} />
     </div>
   );
 }

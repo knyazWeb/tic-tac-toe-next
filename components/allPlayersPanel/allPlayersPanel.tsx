@@ -12,7 +12,6 @@ export default function AllPlayersPanel({ session }: { session: Session }) {
   const [allUsers, setAllUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [buttonActive, setButtonActive] = useState<boolean>(true);
-
   const [blockedUsers, setBlockedUsers] = useState([]);
   useEffect(() => {
     const fetchUsers = async () => {

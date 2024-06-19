@@ -38,6 +38,7 @@ export default function Navbar() {
             <CustomLink
               active={pathname === "/game-field" && item.path === "/" ? true : pathname === item.path ? true : false}
               href={item.path}
+
             >
               {item.title}
             </CustomLink>

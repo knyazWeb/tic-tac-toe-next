@@ -7,7 +7,6 @@ import { UserOnline, useUsers } from "@/contexts/onlineUsersContext";
 import { AcceptModal } from "@/components/acceptModal/acceptModal";
 import { useRouter } from "next/navigation";
 import { IInvite, IRoom, SocketContextType } from "@/socket/interfaces";
-import { User } from "@/lib/interfaces";
 
 const SocketContext = createContext<SocketContextType>({
   socket: null,
@@ -89,8 +88,6 @@ export const SocketProvider = ({ children, session }: { children: React.ReactNod
 
   return (
     <SocketContext.Provider value={{ socket, roomId, room, isConnected }}>
-      {/*TODO: bag with two modals at one time
-       */}
       <AcceptModal
         isOpen={isInviteModalOpen}
         setIsOpen={setIsInviteModalOpen}

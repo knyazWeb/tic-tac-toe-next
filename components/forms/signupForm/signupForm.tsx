@@ -63,6 +63,11 @@ export default function SignupForm() {
               value: 2,
               message: "Минимальная длина логина 2 символа",
             },
+            maxLength: {
+              value: 30,
+              message: "Максимальная длина логина 30 символов",
+            },
+            
           })}
         />
         {errors.login && <p className="text-error text-xs mt-1">{errors.login.message}</p>}

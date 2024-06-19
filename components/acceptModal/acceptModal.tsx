@@ -53,7 +53,8 @@ export const AcceptModal = ({ isOpen, setIsOpen, invite, onAccept, onReject }: A
                 alt=""
               />
               <Dialog.Title className="text-2xl font-bold mb-5 text-center">
-                Приглашение сыграть от {invite?.from}
+                Приглашение сыграть от{" "}
+                <span className="text-ellipsis overflow-hidden whitespace-nowrap"> {invite?.from}</span>
               </Dialog.Title>
               <div className="flex flex-col gap-3 w-full">
                 <CustomButton

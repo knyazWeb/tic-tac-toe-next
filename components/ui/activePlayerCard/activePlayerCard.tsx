@@ -14,7 +14,7 @@ export default function ActivePlayerCard({ name, status, inviteUser }: ActivePla
   const [isInviteAccept, setIsInviteAccept] = useState(true);
   return (
     <div className="w-fill max-w-[715px] h-[70px] flex justify-between items-center">
-      <div>{name}</div>
+      <div className="text-ellipsis overflow-hidden whitespace-nowrap">{name}</div>
       <div className="flex justify-between items-center gap-[80px]">
         <div>
           <PlayerStatusCard
