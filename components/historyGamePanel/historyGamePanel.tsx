@@ -21,8 +21,7 @@ export default function HistoryGamePanel({ session }: { session: Session }) {
   const [games, setGames] = useState<Game[]>([]);
   useEffect(() => {
     const fetchUsers = async () => {
-      const login = session.user.name;
-      const res = await fetch(`/api/games?`, {
+      const res = await fetch(`/api/games`, {
         method: "GET",
       });
       const data = await res.json();
@@ -36,7 +35,7 @@ export default function HistoryGamePanel({ session }: { session: Session }) {
     return <Loader />;
   }
   return (
-    <div className="w-full max-w-[1000px] max-h-[855px] overflow-y-scroll scrollbar-hide p-8 bg-white rounded-[40px] shadow-container">
+    <div className="w-full max-w-[1000px] max-h-[calc(100vh-100px)] overflow-y-auto scrollbar-hide p-8 bg-white rounded-[40px] shadow-container ">
       <div className="flex justify-between items-center mb-6">
         <p className="text-2xl font-bold">История игр</p>
       </div>
@@ -101,8 +100,7 @@ export default function HistoryGamePanel({ session }: { session: Session }) {
                       {game.winner === game.player2 && (
                         <Image
                           width={20}
-                        height={20}
-                          
+                          height={20}
                           src={WinnerS}
                           alt=""
                         />

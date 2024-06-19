@@ -36,7 +36,7 @@ export default function ActivePlayerPanel({ session }: { session: Session }) {
   };
 
   return (
-    <div className="w-full max-w-[780px]  max-h-[855px] overflow-y-scroll scrollbar-hide p-8 bg-white rounded-[40px] shadow-container">
+    <div className="w-full max-w-[780px] max-h-[calc(100vh-100px)] overflow-y-scroll scrollbar-hide p-8 bg-white rounded-[40px] shadow-container">
       <div className="flex justify-between items-center mb-6">
         <p className="text-2xl font-bold">Активные игроки</p>
         <div className="flex gap-3 items-center">
