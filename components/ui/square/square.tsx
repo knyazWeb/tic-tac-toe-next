@@ -37,15 +37,14 @@ export default function Square({ state, onClick, isWinning }: SquareProps) {
       className={`max-w-[197px] ${isWinning ? (state === "cross" ? "bg-[#CFEDE6]" : "bg-pink") : "bg-white hover:bg-[#f7f7f7]"} w-full rounded-xl  transition-all duration-200 ease-in-out ${state === "cross" ? "cursor-default" : state === "zero" ? "cursor-default" : "cursor-pointer"} flex justify-center items-center`}
     >
       {state === "cross" ? (
-        <div>
+        <div className="w-auto h-auto">
           <Image
             src={Cross}
-            
             alt=""
           />
         </div>
       ) : state === "zero" ? (
-        <div>
+        <div className="w-auto h-auto">
           <Image
             src={Zero}
             alt=""

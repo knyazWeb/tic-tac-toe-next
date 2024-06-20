@@ -11,6 +11,7 @@ const config: Config = {
       screens: {
         tablet: { max: "900px" },
         mobile: { max: "1130px" },
+        wideScreen: {max:"1390px"}
       },
       colors: {
         textDark: "#373745",
