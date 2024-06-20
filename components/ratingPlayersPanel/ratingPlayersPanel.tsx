@@ -34,7 +34,7 @@ export default function RatingPlayersPanel({ session }: { session: Session }) {
               <th className="text-start pb-2 w-[15%] mobile:pr-2 text-nowrap">Всего игр</th>
               <th className="text-start pb-2 w-[15%] mobile:pr-2">Победы</th>
               <th className="text-start pb-2 w-[15%] mobile:pr-2">Проигрыши</th>
-              <th className="text-start pb-2 w-[15%] text-nowrap">Процент побед</th>
+              <th className="text-start pb-2 w-[15%] text-nowrap mobile:pr-4">Процент побед</th>
             </tr>
           </thead>
           <tbody>

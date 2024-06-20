@@ -42,7 +42,7 @@ export const AcceptModal = ({ isOpen, setIsOpen, invite, onAccept, onReject }: A
         className="fixed inset-0 bg-black/10"
         aria-hidden="true"
       >
-        <div className="fixed inset-0 flex w-full items-center justify-center no-touch:pr-4">
+        <div className="fixed inset-0 flex w-[calc(100vw-16px)] items-center justify-center no-touch:pr-4 mx-auto">
           <Dialog.Panel className={`bg-white rounded-2xl max-w-[400px] w-full py-[40px] px-6`}>
             <div className="flex flex-col items-center ">
               <Image

@@ -68,19 +68,24 @@ export default function OnlineGameField() {
   return (
     <>
       <div className="flex flex-col items-center">
-        <div className="mb-[37px]">
+        <div className="mb-[37px] mobile:mb-[15px]">
           {
             <Timer
               timerState={false}
               startSeconds={timerState}
               isStopped={winState}
-              stopGame={() => {
-                console.log("stopGame");
-              }}
+              stopGame={() => {}}
             />
           }
         </div>
-        <div className="grid gap-1 grid-cols-[minmax(120px,197px)_minmax(120px,197px)_minmax(120px,197px)] grid-rows-[minmax(120px, 197px)_minmax(120px,197px)_minmax(120px,197px)] justify-center shadow-main w-fit rounded-xl">
+        <div className="hidden mobile:block mobile:mb-6">
+          <StepPanel
+            isStopped={!!winState}
+            isCross={turn === room.players[0]}
+            name={turn === room.players[0] ? room.players[0] : room.players[1]}
+          />
+        </div>
+        <div className="grid gap-1 grid-cols-[minmax(100px,197px)_minmax(100px,197px)_minmax(100px,197px)] grid-rows-[minmax(100px, 197px)_minmax(100px,197px)_minmax(100px,197px)] justify-center shadow-main w-fit rounded-xl ">
           {board.map((state, index) => {
             const winInfo = calculateWinner(board);
             const isWinningSquare = winInfo ? winInfo.line.includes(index) : false;
@@ -97,7 +102,7 @@ export default function OnlineGameField() {
             );
           })}
         </div>
-        <div className="mt-[43px]">
+        <div className="mt-[43px] mobile:hidden">
           <StepPanel
             isStopped={!!winState}
             isCross={turn === room.players[0]}
@@ -106,7 +111,7 @@ export default function OnlineGameField() {
         </div>
       </div>
       <CustomModal
-        title={winState === "Ничья" ? "Ничья" : `${winState} победил!`}
+        title={winState === "Ничья" ? "Ничья" : winState === 'Время вышло!' ? 'Время вышло!' : `${winState} победил!`}
         resetGame={() => {
           router.push("/active-players");
         }}

@@ -40,6 +40,7 @@ export default function Square({ state, onClick, isWinning }: SquareProps) {
         <div>
           <Image
             src={Cross}
+            
             alt=""
           />
         </div>

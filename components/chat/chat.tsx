@@ -17,16 +17,20 @@ export default function Chat() {
   const [isScrolledToBottom, setIsScrolledToBottom] = useState(true);
   const [isScrolledToTop, setIsScrolledToTop] = useState(true);
   const chatRef = useRef<HTMLDivElement>(null);
-
+  console.log(isScrolledToBottom, isScrolledToTop);
   const handleScroll = () => {
     const { scrollTop, scrollHeight, clientHeight } = chatRef.current;
-    setIsScrolledToBottom(scrollTop + clientHeight >= scrollHeight - 5);
+    setIsScrolledToBottom(scrollTop + clientHeight >= scrollHeight - 15);
     setIsScrolledToTop(scrollTop === 0);
   };
 
   useEffect(() => {
     const chatContainer = chatRef.current;
-    chatContainer.scrollTop = chatContainer.scrollHeight;
+    if (window.innerWidth > 700) {
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    } else {
+      chatContainer.scrollTop = 0;
+    }
   }, [messages]);
 
   useEffect(() => {
@@ -40,7 +44,11 @@ export default function Chat() {
   useEffect(() => {
     if (room) {
       socket.on("chat_message", (message: IMessage) => {
-        setMessages((prev) => [...prev, message]);
+        if (window.innerWidth <= 700) {
+          setMessages((prev) => [...prev, message].reverse());
+        } else {
+          setMessages((prev) => [...prev, message]);
+        }
       });
     }
 
@@ -49,12 +57,16 @@ export default function Chat() {
     };
   }, []);
   return (
-    <div className="relative max-w-[420px] shrink-0 grow-0 w-full self-end max-h-[665px] flex flex-col justify-end pb-[90px] gap-3 mobile:pb-[10px]">
-      {!isScrolledToTop && <Fade className={"absolute top-0 left-0 h-[70px] to-white/0 from-[#F6F6F6]/100 "} />}
-
+    <div className="relative max-w-[420px] shrink-0 grow-0 w-full self-end max-h-[665px] flex flex-col justify-end pb-[90px] gap-3 mobile:pb-[10px] mobile:flex-col-reverse mobile:self-center mobile:max-h-[350px]">
+      {!isScrolledToTop && (
+        <Fade className={"absolute top-0 left-0 h-[70px] to-white/0 from-[#F6F6F6]/100 mobile:hidden"} />
+      )}
+      {!isScrolledToBottom && (
+        <Fade className={"hidden absolute bottom-[10px] left-0 h-[70px] from-white/0 to-[#F6F6F6]/100 mobile:block"} />
+      )}
       <div
         ref={chatRef}
-        className="flex flex-col gap-3 overflow-y-auto scrollbar-hide pb-1"
+        className="flex flex-col gap-3 overflow-y-auto scrollbar-hide pb-1 "
       >
         {messages.length > 0 ? (
           messages.map((message, index) => {
@@ -78,7 +90,10 @@ export default function Chat() {
       </div>
       <div className="relative">
         {!isScrolledToBottom && (
-          <Fade className={"absolute -top-[70px] left-0 h-[70px] from-white/0 to-[#F6F6F6]/100 "} />
+          <Fade className={"absolute -top-[70px] left-0 h-[70px] from-white/0 to-[#F6F6F6]/100 mobile:hidden"} />
+        )}
+        {!isScrolledToTop && (
+          <Fade className={"hidden absolute top-[50px] left-0 h-[50px] to-white/0 from-[#F6F6F6]/100 mobile:block"} />
         )}
         <SendMessageForm />
       </div>

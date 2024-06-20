@@ -42,7 +42,7 @@ export default function PlayersPanel() {
 
   return (
     <div
-      className={`shadow-container w-full rounded-[20px] p-6 max-w-[500px] mobile:mb-1 mobile:${
+      className={`shadow-container bg-white w-full rounded-[20px] p-6 max-w-[500px] mobile:mb-1 mobile:${
         isOpen ? "h-[160px]" : "h-fit"
       } `}
     >

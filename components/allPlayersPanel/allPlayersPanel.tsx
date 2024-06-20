@@ -85,7 +85,7 @@ export default function AllPlayersPanel({ session }: { session: Session }) {
                     />
                   </td>
                   <td className="py-2 mobile:pr-2 min-w-[80px]">{createdDate}</td>
-                  <td className="py-2">
+                  <td className="py-2 mobile:pr-4">
                     {blockedUsers.includes(user.login) ? (
                       <SecondaryButton
                         onClick={() => handleUserUnblock(session.user.name, user.login)}
