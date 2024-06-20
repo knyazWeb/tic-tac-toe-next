@@ -73,7 +73,6 @@ export const SocketProvider = ({ children, session }: { children: React.ReactNod
       });
       
       socket.on("leave_player_game", () => {
-        console.log('было')
         setRoom(null);
         setRoomId(null);
       });
