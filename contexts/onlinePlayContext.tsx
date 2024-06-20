@@ -10,8 +10,9 @@ export const OnlinePlayProvider = ({ children, value }: { children: React.ReactN
   const router = useRouter();
 
   useEffect(() => {
+    
     if (!room && value === true) {
-      router.push("/active-players");
+      router.replace("/active-players");
     }
   }, [room, router]);
 

@@ -29,7 +29,7 @@ export default function OnlineGameField() {
     if (winState) {
       redirectTimeout = setTimeout(() => {
         setWinState(null);
-        router.push("/active-players");
+        router.replace("/active-players");
       }, 3000);
     }
 
@@ -113,7 +113,7 @@ export default function OnlineGameField() {
       <CustomModal
         title={winState === "Ничья" ? "Ничья" : winState === 'Время вышло!' ? 'Время вышло!' : `${winState} победил!`}
         resetGame={() => {
-          router.push("/active-players");
+          router.replace("/active-players");
         }}
         online={true}
         isOpen={!!winState}

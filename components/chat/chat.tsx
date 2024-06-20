@@ -4,6 +4,7 @@ import MessageCard from "@/components/ui/messageCard/messageCard";
 import { useEffect, useRef, useState } from "react";
 import { useSocket } from "@/socket/socket";
 import Fade from "@/components/chat/fade/fade";
+import { debounce } from "lodash";
 
 interface IMessage {
   user: string;
@@ -17,16 +18,15 @@ export default function Chat() {
   const [isScrolledToBottom, setIsScrolledToBottom] = useState(true);
   const [isScrolledToTop, setIsScrolledToTop] = useState(true);
   const chatRef = useRef<HTMLDivElement>(null);
-  console.log(isScrolledToBottom, isScrolledToTop);
-  const handleScroll = () => {
-    const { scrollTop, scrollHeight, clientHeight } = chatRef.current;
-    setIsScrolledToBottom(scrollTop + clientHeight >= scrollHeight - 15);
-    setIsScrolledToTop(scrollTop === 0);
-  };
+ const handleScroll = debounce(() => {
+  const { scrollTop, scrollHeight, clientHeight } = chatRef.current;
+  setIsScrolledToBottom(scrollTop + clientHeight >= scrollHeight - 15);
+  setIsScrolledToTop(scrollTop === 0);
+}, 150);
 
   useEffect(() => {
     const chatContainer = chatRef.current;
-    if (window.innerWidth > 700) {
+    if (window.innerWidth > 1130) {
       chatContainer.scrollTop = chatContainer.scrollHeight;
     } else {
       chatContainer.scrollTop = 0;
@@ -44,11 +44,7 @@ export default function Chat() {
   useEffect(() => {
     if (room) {
       socket.on("chat_message", (message: IMessage) => {
-        if (window.innerWidth <= 700) {
-          setMessages((prev) => [...prev, message].reverse());
-        } else {
-          setMessages((prev) => [...prev, message]);
-        }
+        setMessages((prev) => [...prev, message]);
       });
     }
 
@@ -56,6 +52,10 @@ export default function Chat() {
       socket?.off("chat_message");
     };
   }, []);
+
+ const isSmallScreen = window.innerWidth <= 1130;
+ const messagesToRender = isSmallScreen ? [...messages].reverse() : messages;
+
   return (
     <div className="relative max-w-[420px] shrink-0 grow-0 w-full self-end max-h-[665px] flex flex-col justify-end pb-[90px] gap-3 mobile:pb-[10px] mobile:flex-col-reverse mobile:self-center mobile:max-h-[350px]">
       {!isScrolledToTop && (
@@ -69,7 +69,7 @@ export default function Chat() {
         className="flex flex-col gap-3 overflow-y-auto scrollbar-hide pb-1 "
       >
         {messages.length > 0 ? (
-          messages.map((message, index) => {
+          messagesToRender.map((message, index) => {
             let date = new Date(message?.time);
             let hours = date.getHours();
             let minutes = date.getMinutes();
@@ -93,7 +93,7 @@ export default function Chat() {
           <Fade className={"absolute -top-[70px] left-0 h-[70px] from-white/0 to-[#F6F6F6]/100 mobile:hidden"} />
         )}
         {!isScrolledToTop && (
-          <Fade className={"hidden absolute top-[50px] left-0 h-[50px] to-white/0 from-[#F6F6F6]/100 mobile:block"} />
+          <Fade className={"hidden absolute top-[55px] left-0 h-[50px] to-white/0 from-[#F6F6F6]/100 mobile:block"} />
         )}
         <SendMessageForm />
       </div>
