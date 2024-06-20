@@ -1,8 +1,8 @@
 "use server";
 import prisma from "@/prisma/prisma";
-import { hash } from "bcrypt-ts";
+import { hash } from "bcryptjs";
 import { signUpSchema } from "@/lib/zod";
-import { signIn, signOut } from "@/auth";
+import { signIn } from "@/auth";
 import { AuthError, CredentialsSignin } from "next-auth";
 import { redirect } from "next/navigation";
 

@@ -2,7 +2,7 @@ import NextAuth, { CredentialsSignin, User } from "next-auth";
 import Credentials from "@auth/core/providers/credentials";
 import prisma from "@/prisma/prisma";
 import { loginSchema } from "@/lib/zod";
-import { compare } from "bcrypt-ts";
+import { compare } from "bcryptjs";
 import { ZodError } from "zod";
 
 interface UserData extends User {
