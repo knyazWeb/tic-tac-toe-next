@@ -35,18 +35,18 @@ export default function HistoryGamePanel({ session }: { session: Session }) {
     return <Loader />;
   }
   return (
-    <div className="w-full max-w-[1000px] max-h-[calc(100vh-100px)] overflow-y-auto scrollbar-hide p-8 bg-white rounded-[40px] shadow-container ">
+    <div className="w-full max-w-[1000px] max-h-[calc(100vh-100px)] overflow-y-auto scrollbar-hide p-8 bg-white rounded-[40px] shadow-container mobile:p-4">
       <div className="flex justify-between items-center mb-6">
-        <p className="text-2xl font-bold">История игр</p>
+        <p className="text-2xl font-bold mobile:text-xl">История игр</p>
       </div>
       <div>
-        <table className="w-full">
+        <table className="w-full mobile:min-w-[350px] overflow-x-auto scrollbar-hide">
           <thead>
             <tr>
-              <th className="text-start pb-2 w-[25%]">Игроки</th>
-              <th className="text-start pb-2 w-[10%]"></th>
-              <th className="text-start pb-2 w-[30%]"></th>
-              <th className="text-start pb-2 w-[20%]">Дата</th>
+              <th className="text-start pb-2 w-[25%] mobile:pr-3">Игроки</th>
+              <th className="text-start pb-2 w-[10%] mobile:hidden"></th>
+              <th className="text-start pb-2 w-[30%] mobile:hidden"></th>
+              <th className="text-start pb-2 w-[20%] mobile:pr-3">Дата</th>
               <th className="text-start pb-2 w-[15%]">Время игры</th>
             </tr>
           </thead>
@@ -68,8 +68,8 @@ export default function HistoryGamePanel({ session }: { session: Session }) {
                   key={index}
                   className="border-b border-t border-t-gray-200 border-b-gray-200"
                 >
-                  <td className="text-start py-2 ">
-                    <div className="flex gap-2 text-ellipsis overflow-hidden whitespace-nowrap">
+                  <td className="text-start py-2 mobile:pr-3">
+                    <div className="flex gap-2 break-all">
                       <Image
                         width={20}
                         height={20}
@@ -86,10 +86,7 @@ export default function HistoryGamePanel({ session }: { session: Session }) {
                         />
                       )}
                     </div>
-                  </td>
-                  <td className="text-start py-2 font-bold">против</td>
-                  <td className="text-start py-2 ">
-                    <div className="flex gap-2 text-ellipsis overflow-hidden whitespace-nowrap">
+                    <div className="gap-2 break-all hidden mobile:flex">
                       <Image
                         width={20}
                         height={20}
@@ -107,7 +104,27 @@ export default function HistoryGamePanel({ session }: { session: Session }) {
                       )}
                     </div>
                   </td>
-                  <td className="text-start py-2 ">{dateGame}</td>
+                  <td className="text-start py-2 font-bold mobile:hidden">против</td>
+                  <td className="text-start py-2 mobile:hidden ">
+                    <div className="flex gap-2 text-ellipsis overflow-hidden whitespace-nowrap mobile:pr-2">
+                      <Image
+                        width={20}
+                        height={20}
+                        src={ZeroS}
+                        alt=""
+                      />
+                      {game.player2}
+                      {game.winner === game.player2 && (
+                        <Image
+                          width={20}
+                          height={20}
+                          src={WinnerS}
+                          alt=""
+                        />
+                      )}
+                    </div>
+                  </td>
+                  <td className="text-start py-2 mobile:pr-2">{dateGame}</td>
                   <td className="text-start py-2 ">{timeGame}</td>
                 </tr>
               );

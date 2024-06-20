@@ -54,7 +54,7 @@ export default function Chat() {
 
       <div
         ref={chatRef}
-        className="flex flex-col gap-3 overflow-y-scroll scrollbar-hide pb-1"
+        className="flex flex-col gap-3 overflow-y-auto scrollbar-hide pb-1"
       >
         {messages.length > 0 ? (
           messages.map((message, index) => {

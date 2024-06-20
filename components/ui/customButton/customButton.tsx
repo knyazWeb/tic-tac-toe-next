@@ -14,7 +14,7 @@ export default function CustomButton({ size, children, active, type, onClick }: 
       disabled={!active}
       type={type}
       onClick={onClick}
-      className={`w-full bg-accent rounded-[12px] text-white ${!active ? "opacity-30" : ""} ${size === "small" ? "py-2 px-4 text-sm" : "py-3 px-5 text-base"}  hover:bg-accentDark transition-all duration-200 ease-in-out`}
+      className={`w-full bg-accent rounded-[12px] text-white ${!active ? "opacity-30" : ""} ${size === "small" ? "py-2 px-4 text-sm" : "py-3 px-5 text-base"}  hover:bg-accentDark transition-all duration-200 ease-in-out text-nowrap mobile:px-2 mobile:py-2`}
     >
       {children}
     </button>

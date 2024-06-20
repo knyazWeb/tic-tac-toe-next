@@ -36,10 +36,10 @@ export default function ActivePlayerPanel({ session }: { session: Session }) {
   };
 
   return (
-    <div className="w-full max-w-[780px] max-h-[calc(100vh-100px)] overflow-y-scroll scrollbar-hide p-8 bg-white rounded-[40px] shadow-container">
-      <div className="flex justify-between items-center mb-6">
-        <p className="text-2xl font-bold">Активные игроки</p>
-        <div className="flex gap-3 items-center">
+    <div className="w-full max-w-[780px] max-h-[calc(100vh-100px)] overflow-y-auto scrollbar-hide p-8 bg-white rounded-[40px] shadow-container mobile:p-4 ">
+      <div className="flex justify-between items-center mb-6 mobile:flex-col mobile:gap-4">
+        <p className="text-2xl font-bold mobile:text-xl mobile:self-start">Активные игроки</p>
+        <div className="flex gap-3 items-center mobile:text-sm mobile:self-end mr-1">
           Только свободные
           <SwitchToggle
             enabled={onlyFree}
@@ -47,7 +47,7 @@ export default function ActivePlayerPanel({ session }: { session: Session }) {
           />
         </div>
       </div>
-      <div>
+      <div className="mobile:overflow-x-auto mobile:min-w-[330px] scrollbar-hide">
         {users.map((user, index) => {
           if (currentUser.blocked.includes(user.username)) return null;
           if (onlyFree && user.gameStatus === "В игре") return null;

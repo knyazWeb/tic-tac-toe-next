@@ -13,9 +13,9 @@ interface ActivePlayerCardProps {
 export default function ActivePlayerCard({ name, status, inviteUser }: ActivePlayerCardProps) {
   const [isInviteAccept, setIsInviteAccept] = useState(true);
   return (
-    <div className="w-fill max-w-[715px] h-[70px] flex justify-between items-center">
-      <div className="text-ellipsis overflow-hidden whitespace-nowrap">{name}</div>
-      <div className="flex justify-between items-center gap-[80px]">
+    <div className="w-fill max-w-[715px] h-[70px] flex justify-between items-center mobile:gap-1">
+      <div className="break-all">{name}</div>
+      <div className="flex justify-between items-center gap-[80px] mobile:gap-2">
         <div>
           <PlayerStatusCard
             status={status}

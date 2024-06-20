@@ -15,7 +15,7 @@ export default function GameFieldPage() {
           size="medium"
           type="button"
         >
-          <span className="text-xl">
+          <span className="text-xl mobile:text-lg">
             Начать <span className="font-bold">одиночную</span> игру
           </span>
         </CustomButton>
@@ -27,7 +27,7 @@ export default function GameFieldPage() {
           size="medium"
           type="button"
         >
-          <span className="text-xl">
+          <span className="text-xl mobile:text-lg">
             Начать <span className="font-bold">онлайн</span> игру
           </span>
         </CustomButton>

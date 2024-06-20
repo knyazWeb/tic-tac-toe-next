@@ -47,9 +47,9 @@ export default function AllPlayersPanel({ session }: { session: Session }) {
   };
 
   return (
-    <div className="w-full max-w-[1000px] max-h-[calc(100vh-100px)] overflow-y-scroll scrollbar-hide p-8 bg-white rounded-[40px] shadow-container">
+    <div className="w-full max-w-[1000px] max-h-[calc(100vh-100px)] overflow-y-auto scrollbar-hide p-8 bg-white rounded-[40px] shadow-container mobile:p-4">
       <div className="flex justify-between items-center mb-6">
-        <p className="text-2xl font-bold">Список игроков</p>
+        <p className="text-2xl font-bold mobile:text-xl">Список игроков</p>
       </div>
       <div>
         <table className="w-full">
@@ -77,14 +77,14 @@ export default function AllPlayersPanel({ session }: { session: Session }) {
                   className="border-b border-t border-t-gray-200 border-b-gray-200
                  "
                 >
-                  <td className="py-2">{user.login}</td>
-                  <td className="py-2 pr-10">
+                  <td className="py-2 break-all mobile:min-w-[130px] mobile:pr-2">{user.login}</td>
+                  <td className="py-2 pr-10 mobile:pr-2">
                     <PlayerStatusCard
                       status={blockedUsers.includes(user.login) ? "Заблокирован" : "Активен"}
                       size="medium"
                     />
                   </td>
-                  <td className="py-2">{createdDate}</td>
+                  <td className="py-2 mobile:pr-2 min-w-[80px]">{createdDate}</td>
                   <td className="py-2">
                     {blockedUsers.includes(user.login) ? (
                       <SecondaryButton
