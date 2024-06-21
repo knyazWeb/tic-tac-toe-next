@@ -1,21 +1,32 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Tic Tac Toe game (multiplayer)
 
-## Getting Started
+Live Demo - [Tic Tac Toe](https://tic-tac-toe-knyazweb.vercel.app)
 
-First, run the development server:
+### Built with:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+* ${\textsf{\color{CadetBlue}Next JS}}$
+* ${\textsf{\color{RoyalBlue}Typescript}}$
+* ${\textsf{\color{Green}Supabase}}$
+* ${\textsf{\color{Tan}Prisma}}$
+* ${\textsf{\color{Orchid}Socket IO}}$
+* ${\textsf{\color{OrangeRed}React Hook Form}}$
+* ${\textsf{\color{CornflowerBlue}Webpack}}$
+* ${\textsf{\color{SkyBlue}Tailwind CSS}}$
+* ${\textsf{\color{Red}React Hot Toast}}$
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Features:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+* JWT Authorization with Next-Auth v5
+* Supabase database
+* Real-time updates using Socket.io
+* Mupltiplayer using WebSocket
+* Rating dashboard
+* Game history
+* Game chat using WebSocket
+* Forms validation
+* Solo game
+  
+
+
+
