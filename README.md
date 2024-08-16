@@ -2,7 +2,7 @@
 
 ### About Demo:
 #### EN: <br> &nbsp; * Multiplayer is disabled to avoid paying server ⚠️ </br> &nbsp; * Supabase may be inactive because of a lack of activity ⚠️
-#### RU: <br> &nbsp; * Мультиплеер отключён, чтобы не платить за сервер ⚠️ </br> &nbsp; * Supabase отключается когда отсутсвует активность (авторизация и регистрация могут не работать) ⚠️
+#### RU: <br> &nbsp; * Мультиплеер отключён, чтобы не платить за сервер ⚠️ </br> &nbsp; * Supabase отключается когда отсутсвует активность (авторизация может не работать) ⚠️
 
 #### Live Demo - [Tic Tac Toe](https://tic-tac-toe-knyazweb.vercel.app)
 
