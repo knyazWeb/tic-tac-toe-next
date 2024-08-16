@@ -1,6 +1,10 @@
 # Tic Tac Toe game (multiplayer)
 
-Live Demo - [Tic Tac Toe](https://tic-tac-toe-knyazweb.vercel.app)
+### About Demo:
+#### EN: <br> &nbsp; * Multiplayer is disabled to avoid paying server ⚠️ </br> &nbsp; * Supabase may be inactive because of a lack of activity ⚠️
+#### RU: <br> &nbsp; * Мультиплеер отключён, чтобы не платить за сервер ⚠️ </br> &nbsp; * Supabase отключается когда отсутсвует активность (авторизация и регистрация могут не работать) ⚠️
+
+#### Live Demo - [Tic Tac Toe](https://tic-tac-toe-knyazweb.vercel.app)
 
 ### Built with:
 
