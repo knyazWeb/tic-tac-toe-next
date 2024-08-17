@@ -1,12 +1,12 @@
-# Tic Tac Toe game (multiplayer)
+# ❌⭕ Tic Tac Toe game (multiplayer)
 
-### About Demo:
+### 🔔 About Demo:
 #### EN: <br> &nbsp; * Multiplayer is disabled to avoid paying server ⚠️ </br> &nbsp; * Supabase may be inactive because of a lack of activity ⚠️
 #### RU: <br> &nbsp; * Мультиплеер отключён, чтобы не платить за сервер ⚠️ </br> &nbsp; * Supabase отключается когда отсутсвует активность (авторизация может не работать) ⚠️
 
-#### Live Demo - [Tic Tac Toe](https://tic-tac-toe-knyazweb.vercel.app)
+#### ▶️ Live Demo - [Tic Tac Toe](https://tic-tac-toe-knyazweb.vercel.app)
 
-### Built with:
+### ⚙️ Built with:
 
 * ${\textsf{\color{CadetBlue}Next JS}}$
 * ${\textsf{\color{RoyalBlue}Typescript}}$
@@ -19,7 +19,7 @@
 * ${\textsf{\color{Red}React Hot Toast}}$
 
 
-### Features:
+### 💫 Features:
 
 * JWT Authorization with Next-Auth v5
 * Supabase database
